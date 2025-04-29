@@ -76,7 +76,7 @@ if (process.env.NODE_ENV === "production") {
     app.use(express.static(frontendDistPath));
 
     console.log("➡️ Adding catch-all route for frontend...");
-    app.get("/*", (req, res) => {
+    app.get("*", (req, res) => {
         const indexHtmlPath = path.join(frontendDistPath, "index.html");
         console.log("Sending file:", indexHtmlPath);
         res.sendFile(indexHtmlPath);
