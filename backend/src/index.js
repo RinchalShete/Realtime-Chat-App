@@ -76,11 +76,16 @@ if (process.env.NODE_ENV === "production") {
     app.use(express.static(frontendDistPath));
 
     console.log("➡️ Adding catch-all route for frontend...");
-    app.get("*", (req, res) => {
+    app.get("/*", (req, res) => {
         const indexHtmlPath = path.join(frontendDistPath, "index.html");
-        console.log("Sending file:", indexHtmlPath);
-        res.sendFile(indexHtmlPath);
-    });
+        console.log("Attempting to send file from:", indexHtmlPath);
+        res.sendFile(indexHtmlPath, (err) => {
+            if (err) {
+                console.error("Error sending file:", err);
+                res.status(err.status).send(err.message);
+            }
+        });
+    });    
     console.log("✅ Catch-all route set.");
 }
 
