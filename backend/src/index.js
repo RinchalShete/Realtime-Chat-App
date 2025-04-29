@@ -71,11 +71,15 @@ console.log("✅ /api/messages routes mounted.");
 // Serve static files in production
 if (process.env.NODE_ENV === "production") {
     console.log("➡️ Serving frontend from /frontend/dist...");
-    app.use(express.static(path.join(__dirname, "../frontend/dist")));
+    const frontendDistPath = path.join(__dirname, "../../frontend/dist");
+    console.log("Frontend path:", frontendDistPath);
+    app.use(express.static(frontendDistPath));
 
     console.log("➡️ Adding catch-all route for frontend...");
     app.get("/*", (req, res) => {
-        res.sendFile(path.join(__dirname, "../frontend", "dist", "index.html"));
+        const indexHtmlPath = path.join(frontendDistPath, "index.html");
+        console.log("Sending file:", indexHtmlPath);
+        res.sendFile(indexHtmlPath);
     });
     console.log("✅ Catch-all route set.");
 }
