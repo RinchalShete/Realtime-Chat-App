@@ -77,6 +77,7 @@ if (process.env.NODE_ENV === "production") {
 
     console.log("➡️ Adding catch-all route for frontend...");
     app.get("/*", (req, res) => {
+        console.log("Matched a request!");  
         const indexHtmlPath = path.join(frontendDistPath, "index.html");
         console.log("Attempting to send file from:", indexHtmlPath);
         res.sendFile(indexHtmlPath, (err) => {
