@@ -71,7 +71,7 @@ console.log("✅ /api/messages routes mounted.");
 // Serve static files in production
 if (process.env.NODE_ENV === "production") {
     console.log("➡️ Serving frontend from /frontend/dist...");
-    const frontendDistPath = path.join(__dirname, "../frontend/dist");
+    const frontendDistPath = path.join(__dirname, "../../frontend/dist");
     console.log("Frontend path:", frontendDistPath);
     app.use(express.static(frontendDistPath));
 
