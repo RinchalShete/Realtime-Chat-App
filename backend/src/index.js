@@ -76,8 +76,8 @@ if (process.env.NODE_ENV === "production") {
     app.use(express.static(frontendDistPath));
 
     console.log("➡️ Adding catch-all route for frontend...");
-    // Handle root route explicitly first
-    app.get("/", (req, res) => {
+    app.get(/(.*)/, (req, res) => {
+        console.log("Matched a request!");  
         const indexHtmlPath = path.join(frontendDistPath, "index.html");
         console.log("Attempting to send file from:", indexHtmlPath);
         res.sendFile(indexHtmlPath, (err) => {
@@ -86,19 +86,7 @@ if (process.env.NODE_ENV === "production") {
                 res.status(err.status).send(err.message);
             }
         });
-    });
-
-    // Handle catch-all routes for the rest of the frontend paths
-    app.get("*", (req, res) => {
-        const indexHtmlPath = path.join(frontendDistPath, "index.html");
-        console.log("Attempting to send file from:", indexHtmlPath);
-        res.sendFile(indexHtmlPath, (err) => {
-            if (err) {
-                console.error("Error sending file:", err);
-                res.status(err.status).send(err.message);
-            }
-        });
-    });  
+    });    
     console.log("✅ Catch-all route set.");
 }
 
